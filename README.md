@@ -1,6 +1,6 @@
 # App of the ebook
 
-This is a basic application JavaScript that was used **AJAX** and **JSON** for application. 
+This is a basic application JavaScript that was used **AJAX** and **JSON**. 
 
 See the ebook for more information on: [ebook](http://www.casadocodigo.com.br/products/livro-javascript-jquery)
 
