@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+
+    <title>rogus - carrinho de compras</title>
+    <link type='text/css' href='stylesheets/rogus.css' rel='stylesheet'>
+    <script src='javascripts/rogus.js' type='text/javascript'></script>
+    <script src='javascripts/jquery-1.9.1.min.js' type='text/javascript'></script>
+</head>
+<body>
+    <div id="header-container">
+        <div id="header">
+            <span class="logo">rogus</span>
+        </div>
+    </div>
+    <div id="content">  
+    <h2>Carrinho de compras</h2>
+    <table id="cart">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    Itens para comprar
+                </th>
+                <th>
+                    Preço
+                </th>
+                <th>
+                    Quantidade
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="produto">
+                <td class="image">
+                    <img class="cover" src="images/nirvana-nevermind.jpeg">
+                </td>
+                <td>
+                    <div class="product">
+                        <a href="#" class="product-link">Nevermind</a> - 
+                        <a href="#" class="author-link">Nirvana</a>
+                    </div>
+                    <div class="in-stock">Em estoque</div>
+                    <div><input type="checkbox" id="gift" /><label for="gift">Embalar para presente</label></div>
+                    <div><a href="#" class="delete-link">Tirar do carrinho</a></div>
+                </td>
+                <td class="small"><div class="price">R$ 29,90</div></td>
+                <td class="small">
+                    <input class="quantity" type="number" value="1" size="3" maxlength="3" min="1" max="10" step="1">
+                </td>
+            </tr>
+            <tr class="produto">
+                <td class="image">
+                    <img class="cover" src="images/ledzeppelin-whengiantswalked.jpeg">
+                </td>
+                <td>
+                    <div class="product">
+                        <a href="#" class="product-link">When Giants Walked the Earth: A Biography of Led Zeppelin</a> - 
+                        <a href="#" class="author-link">Mick Wall</a>
+                    </div>
+                    <div class="in-stock">Em estoque</div>
+                    <div><input type="checkbox" id="gift" /><label for="gift">Embalar para presente</label></div>
+                    <div><a href="#" class="delete-link">Tirar do carrinho</a></div>
+                </td>
+                <td class="small"><div class="price">R$ 59,90</div></td>
+                <td class="small">
+                    <input class="quantity" type="number" value="1" size="3" maxlength="3" min="1" max="10" step="1">
+                </td>
+            </tr>
+            <tr class="produto">
+                <td class="image">
+                    <img class="cover" src="images/big4live.jpeg">
+                </td>
+                <td>
+                    <div class="product">
+                        <a href="#" class="product-link">The Big 4 Live from Sofia, Bulgaria</a> - 
+                        <a href="#" class="author-link">Metallica, Slayer, Megadeth and Anthrax</a>
+                    </div>
+                    <div class="in-stock">Em estoque</div>
+                    <div><input type="checkbox" id="gift" /><label for="gift">Embalar para presente</label></div>
+                    <div><a href="#" class="delete-link">Tirar do carrinho</a></div>
+                </td>
+                <td class="small"><div class="price">R$ 99,90</div></td>
+                <td class="small">
+                    <input class="quantity" type="number" value="1" size="3" maxlength="3" min="1" max="10" step="1">
+                </td>
+            </tr>
+            <tr class="footer">
+                <td></td>
+                <td>Total da compra</td>
+                <td><div id="total">R$ 189,70</div></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script type="text/javascript">
+
+    function moneyTextToFloat(text) {
+    var cleanText = text.replace("R$ ", "").replace(",", ".");
+    return parseFloat(cleanText);
+}
+
+function floatToMoneyText(value) {
+    var text = (value < 1 ? "0" : "") + Math.floor(value * 100);
+    text = "R$ " + text;
+    return text.substr(0, text.length - 2) + "," + text.substr(-2);
+}
+
+function readTotal() {
+    var $total = $("#total").text();
+    return moneyTextToFloat(total);
+}
+
+function writeTotal(value) {
+    var text = floatToMoneyText(value);
+    $("#total").text(text);
+}
+
+    var produtos = document.getElementsByClassName('produto');
+    console.log(produtos);
+
+    function calculateTotalProducts(){
+        var produtos = $(".produto");
+        var total = 0;
+        $(produtos).each(function(pos, produto){
+        	var $produto = $(produto);
+        	var quantity = moneyTextToFloat($produto.find(".quantity").val());
+        	var price = moneyTextToFloat($produto.find(".price").text());
+        	total += quantity * price;
+        });
+        return total;
+        /*
+        for (var pos = 0; pos < produtos.length; pos++){
+        	var produto = $(produtos[pos]);
+        	var quantity = moneyTextToFloat(produto.find(".price").text());
+        	total += quantity * price;
+        }*/
+        
+    }
+
+    function quantidadeMudou(){
+        writeTotal(calculateTotalProducts());
+    }
+
+    function onDocumentLoad(){
+        $(".quantity").change(function(){
+        	writeTotal(calculateTotalProducts());
+        });
+    }
+
+    /*
+    var allElements = document.getElementsByTagName('*');
+    var results = [];
+
+    var elemento;
+    for (var i = 0; (elemento = allElements[i]) != null; i++){
+    	var elementoClass = elemento.className;
+    	if (elementoClass && elementoClass.indexOf() != -1){
+    		results.push(elemento);
+    	}
+    	return results;
+    }*/
+    
+
+    window.onload = onDocumentLoad;
+
+
+    
+</script>
+</html>
